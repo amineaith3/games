@@ -15,28 +15,31 @@ let food = { x: 0, y: 0 };
 let score = 0;
 let gameOver = false;
 let gameStarted = false;
+
+let speed = 150;
+const MIN_SPEED = 60;
+const MAX_SPEED = 300;
+const SPEED_STEP = 15;
+
 let loop = null;
 
 function randomFood() {
-  let valid = false;
-  while (!valid) {
+  let ok = false;
+  while (!ok) {
     food.x = Math.floor(Math.random() * cols);
     food.y = Math.floor(Math.random() * rows);
-    valid = !snake.some(p => p.x === food.x && p.y === food.y);
+    ok = !snake.some(p => p.x === food.x && p.y === food.y);
   }
 }
 
 function drawGrid() {
   ctx.strokeStyle = "#1f2933";
-  ctx.lineWidth = 1;
-
   for (let x = 0; x <= cols; x++) {
     ctx.beginPath();
     ctx.moveTo(x * grid, 0);
     ctx.lineTo(x * grid, canvas.height);
     ctx.stroke();
   }
-
   for (let y = 0; y <= rows; y++) {
     ctx.beginPath();
     ctx.moveTo(0, y * grid);
@@ -86,12 +89,26 @@ function update() {
   draw();
 }
 
+function startGame() {
+  if (!gameStarted) {
+    gameStarted = true;
+    loop = setInterval(update, speed);
+  }
+}
+
+function restartLoop() {
+  if (!gameStarted) return;
+  clearInterval(loop);
+  loop = setInterval(update, speed);
+}
+
 function resetGame() {
   clearInterval(loop);
   snake = [{ x: 7, y: 7 }];
   dx = 1;
   dy = 0;
   score = 0;
+  speed = 150;
   scoreEl.textContent = `Score: ${score}`;
   gameOver = false;
   gameStarted = false;
@@ -100,28 +117,39 @@ function resetGame() {
 }
 
 document.addEventListener("keydown", e => {
-  if (e.key.toLowerCase() === "r") {
+  const k = e.key.toLowerCase();
+
+  if (k === "p") {
+    startGame();
+    return;
+  }
+
+  if (k === "r") {
     resetGame();
+    return;
+  }
+
+  if (k === "l") {
+    speed = Math.max(MIN_SPEED, speed - SPEED_STEP);
+    restartLoop();
+    return;
+  }
+
+  if (k === "k") {
+    speed = Math.min(MAX_SPEED, speed + SPEED_STEP);
+    restartLoop();
     return;
   }
 
   if (!gameStarted) return;
 
-  const key = e.key.toLowerCase();
-
-  if (key === "w" && dy === 0) { dx = 0; dy = -1; }
-  else if (key === "s" && dy === 0) { dx = 0; dy = 1; }
-  else if (key === "a" && dx === 0) { dx = -1; dy = 0; }
-  else if (key === "d" && dx === 0) { dx = 1; dy = 0; }
+  if (k === "w" && dy === 0) { dx = 0; dy = -1; }
+  else if (k === "s" && dy === 0) { dx = 0; dy = 1; }
+  else if (k === "a" && dx === 0) { dx = -1; dy = 0; }
+  else if (k === "d" && dx === 0) { dx = 1; dy = 0; }
 });
 
-startBtn.onclick = () => {
-  if (!gameStarted) {
-    gameStarted = true;
-    loop = setInterval(update, 150);
-  }
-};
-
+startBtn.onclick = startGame;
 resetBtn.onclick = resetGame;
 
 randomFood();
