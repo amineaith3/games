@@ -115,7 +115,6 @@ function resetGame() {
   randomFood();
   draw();
 }
-
 document.addEventListener("keydown", e => {
   const k = e.key.toLowerCase();
 
@@ -143,10 +142,10 @@ document.addEventListener("keydown", e => {
 
   if (!gameStarted) return;
 
-  if (k === "w" && dy === 0) { dx = 0; dy = -1; }
-  else if (k === "s" && dy === 0) { dx = 0; dy = 1; }
-  else if (k === "a" && dx === 0) { dx = -1; dy = 0; }
-  else if (k === "d" && dx === 0) { dx = 1; dy = 0; }
+  if ((k === "w" || k === "arrowup") && dy === 0) { dx = 0; dy = -1; }
+  else if ((k === "s" || k === "arrowdown") && dy === 0) { dx = 0; dy = 1; }
+  else if ((k === "a" || k === "arrowleft") && dx === 0) { dx = -1; dy = 0; }
+  else if ((k === "d" || k === "arrowright") && dx === 0) { dx = 1; dy = 0; }
 });
 
 startBtn.onclick = startGame;
@@ -154,3 +153,4 @@ resetBtn.onclick = resetGame;
 
 randomFood();
 draw();
+
