@@ -1,3 +1,8 @@
+const highScoreEl = document.getElementById("highScore");
+
+let highScore = Number(localStorage.getItem("snakeHighScore")) || 0;
+highScoreEl.textContent = `High Score: ${highScore}`;
+
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 const scoreEl = document.getElementById("score");
@@ -72,9 +77,17 @@ function update() {
     snake.some(p => p.x === head.x && p.y === head.y)
   ) {
     gameOver = true;
+  
+    if (score > highScore) {
+      highScore = score;
+      localStorage.setItem("snakeHighScore", highScore);
+      highScoreEl.textContent = `High Score: ${highScore}`;
+    }
+  
     alert(`💀 Game Over! Score: ${score}`);
     return;
   }
+
 
   snake.unshift(head);
 
@@ -153,4 +166,5 @@ resetBtn.onclick = resetGame;
 
 randomFood();
 draw();
+
 
