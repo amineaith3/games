@@ -33,7 +33,7 @@ function initGame() {
         let row = [];
         for (let c = 0; c < COLS; c++) {
             const cell = document.createElement('div');
-            cell.className = 'cell hidden';
+            cell.className = 'cell unrevealed';
             cell.addEventListener('click', () => handleCellClick(r, c));
             cell.addEventListener('contextmenu', (e) => {
                 e.preventDefault();
@@ -115,7 +115,7 @@ function revealCell(r, c) {
     
     board[r][c].isRevealed = true;
     const el = board[r][c].element;
-    el.classList.remove('hidden');
+    el.classList.remove('unrevealed');
     el.classList.add('revealed');
 
     if (board[r][c].neighbors > 0) {
@@ -139,7 +139,7 @@ function gameOver(win) {
         for (let c = 0; c < COLS; c++) {
             let cell = board[r][c];
             if (cell.isMine) {
-                cell.element.classList.remove('hidden');
+                cell.element.classList.remove('unrevealed');
                 cell.element.classList.add('revealed');
                 cell.element.innerText = '💣';
                 if (!win && !cell.isRevealed) cell.element.classList.add('bg-red-500');

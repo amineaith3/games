@@ -10,6 +10,23 @@
   </script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="icon" href="../../assets/favicon.ico">
+  <style>
+    .tile {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      transition: transform 0.15s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      font-size: 24px;
+      border-radius: 0.5rem;
+    }
+    @media (min-width: 640px) {
+      .tile { width: 80px; height: 80px; font-size: 32px; }
+    }
+  </style>
 </head>
 <body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col items-center justify-center font-sans selection:bg-orange-500/30 relative overflow-hidden">
   <div class="absolute inset-0 pointer-events-none z-0 flex justify-center items-center">
@@ -23,14 +40,29 @@
        </div>
     </div>
     
-    <div id="board" class="grid grid-cols-4 gap-2 bg-slate-800 p-2 rounded-xl mb-6 relative"></div>
+    <div id="board-container" class="relative bg-slate-800 p-2 rounded-xl mb-6 w-[296px] h-[296px] sm:w-[360px] sm:h-[360px] mx-auto">
+        <!-- Background grid -->
+        <div class="grid grid-cols-4 gap-2 w-full h-full">
+            <div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div>
+            <div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div>
+            <div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div>
+            <div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div><div class="bg-slate-900/50 rounded-lg w-full h-full"></div>
+        </div>
+        <!-- Tiles container -->
+        <div id="tiles-container" class="absolute inset-2"></div>
+        
+        <!-- Game Over overlay -->
+        <div id="gameOver" class="absolute inset-0 bg-slate-950/80 rounded-xl flex-col items-center justify-center hidden z-20 backdrop-blur-sm">
+            <h2 class="text-4xl font-bold text-white mb-2">Game Over!</h2>
+        </div>
+    </div>
     <p class="text-slate-400 text-sm mb-4">Use arrow keys or swipe to move tiles.</p>
 
     <div class="flex flex-col sm:flex-row justify-center gap-3 w-full">
-       <button id="restartBtn" class="flex-1 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-medium transition-colors shadow-lg shadow-orange-500/20">
+       <button id="restartBtn" class="flex-1 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-medium transition-colors shadow-lg shadow-orange-500/20 z-30">
          🔄 Restart
        </button>
-       <a href="../../index.html" class="flex-1 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors border border-slate-700 hover:border-slate-600">
+       <a href="../../index.html" class="flex-1 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors border border-slate-700 hover:border-slate-600 z-30">
          ← Back
        </a>
     </div>
