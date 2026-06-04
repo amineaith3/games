@@ -1,6 +1,6 @@
 # Sirius Games 🎮
 
-A curated collection of 6 browser-based mini-games built entirely from scratch using **Vanilla HTML, CSS, and JavaScript**. 
+A curated collection of 10 browser-based mini-games built entirely from scratch using **Vanilla HTML, CSS, and JavaScript**. 
 
 This project explores fundamental game development concepts—such as state management, collision detection, game loops, physics, and UI interactions—without relying on heavy frameworks or game engines.
 
@@ -34,6 +34,22 @@ Play the games live at: [games.sirius-aah.com](https://games.sirius-aah.com)
 ### 6. Flappy Box (HTML5 Canvas)
 **Concept:** Gravity simulation, Vertical Velocity, Procedural generation.
 **How it works:** The player character (box) has a constant downward force (gravity) applied to its vertical velocity (`vy`) every frame. Pressing space applies a negative impulse to `vy`, making it jump. Pipes are generated at regular intervals and pushed into an array, moving steadily to the left. The game loops through the pipes array to render them and perform collision checks against the player's bounding box.
+
+### 7. Tic Tac Toe (DOM-based)
+**Concept:** Grid logic, Win condition checking, Turn-based state.
+**How it works:** A simple 3x3 grid using arrays to track X's and O's. On every turn, it checks an array of 8 possible winning line combinations to determine if a player has won or if the board is full (draw).
+
+### 8. Connect 4 (DOM-based)
+**Concept:** 2D Arrays, Gravity-simulated grid insertion, Multi-directional win checking.
+**How it works:** A 6x7 grid tracked via a 2D array. When a column is clicked, the disc "falls" to the lowest available row. It then checks vertically, horizontally, and diagonally for 4 consecutive identical discs to determine the winner.
+
+### 9. 2048 (DOM-based)
+**Concept:** Array shifting/merging, Matrix transposition, Keyboard/Swipe event handling.
+**How it works:** Uses a 4x4 array. Sliding tiles involves filtering non-zero elements, merging adjacent duplicates, and padding with zeros. For vertical moves, it temporarily transposes the rows into columns, applies the horizontal slide logic, and transposes back. Supports both arrow keys and mobile touch swipes.
+
+### 10. Minesweeper (DOM-based)
+**Concept:** Recursive revealing (Flood fill), Grid neighbor calculations, Left/Right click handling.
+**How it works:** A 10x10 grid with randomly distributed mines. Neighbor mine counts are pre-calculated. Clicking an empty cell uses a recursive flood-fill algorithm to reveal all adjacent safe cells. Right-clicking (`contextmenu` event) places flags to mark suspected mines and track remaining mines.
 
 ---
 

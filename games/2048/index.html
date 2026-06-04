@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>2048 | Sirius Games</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = { theme: { extend: { fontFamily: { sans: ['Inter', 'sans-serif'], } } } }
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="icon" href="../../assets/favicon.ico">
+</head>
+<body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col items-center justify-center font-sans selection:bg-orange-500/30 relative overflow-hidden">
+  <div class="absolute inset-0 pointer-events-none z-0 flex justify-center items-center">
+    <div class="absolute w-[500px] h-[500px] bg-orange-600/10 rounded-full blur-[120px]"></div>
+  </div>
+  <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-3xl shadow-2xl backdrop-blur-md relative z-10 w-full max-w-md text-center flex flex-col items-center">
+    <div class="flex justify-between items-center w-full mb-6">
+       <h1 class="text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500">2048</h1>
+       <div class="bg-slate-800 px-4 py-2 rounded-lg font-bold">
+          Score: <span id="score" class="text-orange-400">0</span>
+       </div>
+    </div>
+    
+    <div id="board" class="grid grid-cols-4 gap-2 bg-slate-800 p-2 rounded-xl mb-6 relative"></div>
+    <p class="text-slate-400 text-sm mb-4">Use arrow keys or swipe to move tiles.</p>
+
+    <div class="flex flex-col sm:flex-row justify-center gap-3 w-full">
+       <button id="restartBtn" class="flex-1 px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-700 text-white font-medium transition-colors shadow-lg shadow-orange-500/20">
+         🔄 Restart
+       </button>
+       <a href="../../index.html" class="flex-1 px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium transition-colors border border-slate-700 hover:border-slate-600">
+         ← Back
+       </a>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
