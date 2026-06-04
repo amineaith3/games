@@ -3,10 +3,20 @@ const flagsLeftElement = document.getElementById('flagsLeft');
 const timerElement = document.getElementById('timer');
 const statusElement = document.getElementById('status');
 const restartBtn = document.getElementById('restartBtn');
+const levelSelect = document.getElementById('levelSelect');
+const bestTimeElement = document.getElementById('bestTime');
 
-const ROWS = 10;
-const COLS = 10;
-const MINES = 10;
+const LEVELS = [
+    { rows: 9, cols: 9, mines: 10 },
+    { rows: 16, cols: 16, mines: 40 },
+    { rows: 16, cols: 30, mines: 99 },
+    { rows: 20, cols: 30, mines: 130 }
+];
+
+let currentLevel = 0;
+let ROWS = LEVELS[0].rows;
+let COLS = LEVELS[0].cols;
+let MINES = LEVELS[0].mines;
 
 let board = [];
 let gameActive = false;
@@ -17,17 +27,39 @@ let timerInterval;
 
 const numberColors = ['', 'text-blue-400', 'text-green-400', 'text-red-500', 'text-purple-500', 'text-yellow-600', 'text-teal-400', 'text-slate-900', 'text-gray-400'];
 
+function loadBestTime() {
+    const best = localStorage.getItem(`minesweeper_best_${currentLevel}`);
+    bestTimeElement.innerText = best ? best + 's' : 'Inf';
+}
+
+function saveBestTime(time) {
+    const best = localStorage.getItem(`minesweeper_best_${currentLevel}`);
+    if (!best || time < parseInt(best)) {
+        localStorage.setItem(`minesweeper_best_${currentLevel}`, time);
+        loadBestTime();
+    }
+}
+
 function initGame() {
     clearInterval(timerInterval);
     boardElement.innerHTML = '';
     board = [];
     gameActive = true;
     firstClick = true;
+    
+    ROWS = LEVELS[currentLevel].rows;
+    COLS = LEVELS[currentLevel].cols;
+    MINES = LEVELS[currentLevel].mines;
+    
     flagsLeft = MINES;
     timer = 0;
     flagsLeftElement.innerText = flagsLeft;
     timerElement.innerText = timer;
     statusElement.innerText = '🙂';
+    
+    loadBestTime();
+
+    boardElement.style.gridTemplateColumns = `repeat(${COLS}, minmax(0, 1fr))`;
 
     for (let r = 0; r < ROWS; r++) {
         let row = [];
@@ -58,6 +90,7 @@ function placeMines(firstR, firstC) {
     while (minesPlaced < MINES) {
         let r = Math.floor(Math.random() * ROWS);
         let c = Math.floor(Math.random() * COLS);
+        // Ensure first click and its immediate neighbors are empty
         if (!board[r][c].isMine && (Math.abs(r - firstR) > 1 || Math.abs(c - firstC) > 1)) {
             board[r][c].isMine = true;
             minesPlaced++;
@@ -135,6 +168,8 @@ function gameOver(win) {
     clearInterval(timerInterval);
     statusElement.innerText = win ? '😎' : '😵';
     
+    if (win) saveBestTime(timer);
+    
     for (let r = 0; r < ROWS; r++) {
         for (let c = 0; c < COLS; c++) {
             let cell = board[r][c];
@@ -161,6 +196,11 @@ function checkWin() {
         gameOver(true);
     }
 }
+
+levelSelect.addEventListener('change', (e) => {
+    currentLevel = parseInt(e.target.value);
+    initGame();
+});
 
 restartBtn.addEventListener('click', initGame);
 initGame();

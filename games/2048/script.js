@@ -114,7 +114,7 @@ window.addEventListener('resize', () => {
 function slide(row) {
     let arr = row.filter(val => val !== null);
     for (let i = 0; i < arr.length - 1; i++) {
-        if (arr[i].val === arr[i+1].val) {
+        if (arr[i] && arr[i+1] && arr[i].val === arr[i+1].val) {
             arr[i].val *= 2;
             score += arr[i].val;
             

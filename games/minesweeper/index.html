@@ -15,23 +15,45 @@
     .cell.unrevealed { background-color: #334155; border: 2px solid #475569; border-top-color: #64748b; border-left-color: #64748b;}
     .cell.unrevealed:hover { background-color: #475569; }
     .cell.revealed { background-color: #1e293b; border: 1px solid #334155; }
+    
+    /* Custom Scrollbar for the board container */
+    .board-container::-webkit-scrollbar { height: 8px; }
+    .board-container::-webkit-scrollbar-track { background: #1e293b; border-radius: 4px; }
+    .board-container::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+    .board-container::-webkit-scrollbar-thumb:hover { background: #64748b; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col items-center justify-center font-sans selection:bg-slate-500/30 relative overflow-hidden">
+<body class="bg-slate-950 text-slate-200 min-h-screen flex flex-col items-center justify-center font-sans selection:bg-slate-500/30 relative overflow-x-hidden">
   <div class="absolute inset-0 pointer-events-none z-0 flex justify-center items-center">
     <div class="absolute w-[500px] h-[500px] bg-slate-600/10 rounded-full blur-[120px]"></div>
   </div>
-  <div class="bg-slate-900/60 border border-slate-800 p-8 rounded-3xl shadow-2xl backdrop-blur-md relative z-10 w-full max-w-xl text-center flex flex-col items-center">
-    <h1 class="text-3xl font-extrabold mb-2 text-white tracking-tight">💣 <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-300 to-slate-500">Minesweeper</span></h1>
-    <div class="flex justify-between w-full max-w-[320px] mb-4 text-lg font-bold bg-slate-800 px-4 py-2 rounded-lg border border-slate-700">
+  
+  <div class="bg-slate-900/60 border border-slate-800 p-6 md:p-8 rounded-3xl shadow-2xl backdrop-blur-md relative z-10 w-full max-w-[1000px] text-center flex flex-col items-center my-8">
+    <h1 class="text-3xl font-extrabold mb-4 text-white tracking-tight">💣 <span class="text-transparent bg-clip-text bg-gradient-to-r from-slate-300 to-slate-500">Minesweeper</span></h1>
+    
+    <div class="flex flex-col sm:flex-row gap-4 mb-4 justify-center items-center w-full max-w-[600px]">
+        <select id="levelSelect" class="bg-slate-800 border border-slate-700 text-white px-3 py-2 rounded-lg outline-none focus:border-slate-500 cursor-pointer w-full sm:w-auto">
+            <option value="0">Beginner (9x9, 10 Mines)</option>
+            <option value="1">Intermediate (16x16, 40 Mines)</option>
+            <option value="2">Expert (30x16, 99 Mines)</option>
+            <option value="3">Insane (30x20, 130 Mines)</option>
+        </select>
+        <div class="bg-slate-800 px-4 py-2 rounded-lg font-bold border border-slate-700 text-sm whitespace-nowrap">
+            🏆 Best Time: <span id="bestTime" class="text-yellow-400">Inf</span>
+        </div>
+    </div>
+
+    <div class="flex justify-between w-full max-w-[600px] mb-4 text-lg font-bold bg-slate-800 px-4 py-2 rounded-lg border border-slate-700">
         <span class="text-red-400">🚩 <span id="flagsLeft">10</span></span>
-        <span id="status" class="text-slate-300 cursor-pointer" onclick="initGame()">🙂</span>
+        <span id="status" class="text-slate-300 cursor-pointer text-2xl leading-none" onclick="initGame()">🙂</span>
         <span class="text-blue-400">⏱ <span id="timer">0</span></span>
     </div>
 
-    <div id="board" class="grid grid-cols-10 gap-0 border-4 border-slate-700 mb-6 bg-slate-700 mx-auto"></div>
+    <div class="w-full overflow-x-auto board-container py-2 mb-6">
+        <div id="board" class="grid gap-0 border-4 border-slate-700 bg-slate-700 mx-auto w-max"></div>
+    </div>
 
-    <div class="flex flex-col sm:flex-row justify-center gap-3 w-full max-w-[320px] mx-auto">
+    <div class="flex flex-col sm:flex-row justify-center gap-3 w-full max-w-[400px] mx-auto">
        <button id="restartBtn" class="flex-1 px-4 py-2 rounded-lg bg-slate-700 hover:bg-slate-600 text-white font-medium transition-colors shadow-lg border border-slate-600">
          🔄 Restart
        </button>
