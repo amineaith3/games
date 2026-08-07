@@ -17,7 +17,7 @@ Play the games live at: [games.sirius-aah.com](https://games.sirius-aah.com)
 
 ### 2. Hangman (DOM-based)
 **Concept:** String manipulation, Array filtering, Keyboard Events.
-**How it works:** A hidden word is chosen from a dictionary array. As the user types letters, the game listens to `keydown` events, checks if the letter exists in the string (using `includes()` or `indexOf()`), and either reveals the letter in the UI or decreases the life counter, rendering a new part of the hangman figure.
+**How it works:** A hidden word is chosen from a dictionary array. As the user types letters, the game listens to the `keydown` events, checks if the letter exists in the string (using `includes()` or `indexOf()`), and either reveals the letter in the UI or decreases the life counter, rendering a new part of the hangman figure.
 
 ### 3. Memory Game (DOM-based)
 **Concept:** Array shuffling, State machines, `setTimeout()`.
